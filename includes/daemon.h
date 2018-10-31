@@ -16,7 +16,6 @@
 #include <sys/wait.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <signal.h>
 #include <sys/stat.h>
 #include <syslog.h>
 #include <errno.h>
@@ -64,7 +63,7 @@ typedef struct ctrl_s
 	node_t 		*root;
 }				ctrl_t;
 
-/*IP-tree(storage) avl_tree.c*/
+/*IP-tree(storage) ip_storage.c*/
 node_t		*insert(node_t *node, uint32_t ip, uint32_t qnt, char *iface_name);
 void		print_tree(node_t *root);
 node_t		*avl_search(node_t *root,  uint32_t ip);
@@ -79,11 +78,11 @@ void		clean_list(iface_t **list);
 int			save_cur_session(node_t *storage);
 void		load_session(ctrl_t *c_unit);
 
-/*Msg queue/msg funcs msq_funcs.c*/
+/*Msg queue/msg funcs msg_funcs.c*/
 int			client_handler(int msqid, ctrl_t *c_unit, int sock_raw);
 int			init_msq(key_t *key);
 
-/*Client-operatins operations.c*/
+/*Client-operatins cli_operations.c*/
 int			op_start(ctrl_t *c_unit);
 int			op_stop(ctrl_t *c_unit);
 int			op_show(int msqid, ctrl_t *c_unit, uint32_t ip);
@@ -91,9 +90,10 @@ int			op_select(int sock_raw, ctrl_t *c_unit, msgbuf_t *buf);
 int			op_stat(int msqid, ctrl_t *c_unit, msgbuf_t *buf);
 int			op_daemon_stat(int msqid, ctrl_t *c_unit);
 
-/*Sniffer recv sock_recv_hndl.c*/
+/*Sniffer recv socket_recv_handler.c*/
 int			rqvst_handler(int sock_raw, ctrl_t *c_unit);
 
+/*Daemon start with flag start.c*/
 int start(int argc, char **argv, ctrl_t *c_unit);
 
 
