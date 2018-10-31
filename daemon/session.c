@@ -52,7 +52,7 @@ static node_t *load_prev_session(FILE **fp)
 		if ((node = insert(node, encode_ip(split_str[0]),
 						   (uint32_t)strtoul(split_str[1], &end, 10), "s_qnt")) == NULL)
 			exit(EXIT_FAILURE);
-		for(int i = 2; i < pairs; i+=2)
+		for(size_t i = 2; i < pairs; i+=2)
 		{
 			if ((node = insert(node, encode_ip(split_str[0]),
 							   (uint32_t) strtoul(split_str[i + 1], &end, 10), split_str[i])) == NULL)

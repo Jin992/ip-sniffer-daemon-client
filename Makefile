@@ -30,6 +30,7 @@ clean:
 	@/bin/rm -f $(CLIENT_OBJ) $(SHARED_OBJ) $(DAEMON_OBJ)
 
 fclean: clean
+	@/bin/rm -f $(CLIENT_OBJ) $(SHARED_OBJ) $(DAEMON_OBJ)
 	@/bin/rm -f $(CLIENT_NAME) $(DAEMON_NAME)
 
 re: fclean all
