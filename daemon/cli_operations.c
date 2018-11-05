@@ -89,16 +89,25 @@ int op_show(int msqid, ctrl_t *c_unit, uint32_t ip)
 	return EXIT_SUCCESS;
 }
 
-int op_select(int sock_raw, ctrl_t *c_unit, msgbuf_t *buf)
+int op_select(int *sock_raw, ctrl_t *c_unit, msgbuf_t *buf)
 {
 	char		iface[IFACE_SIZE];
 	uint32_t	stat;
 
 	memset(iface, 0, IFACE_SIZE);
 	unpack_status_package(buf->data, &stat, iface);
-	memset(c_unit->cur_device, 0, IFACE_SIZE + 1);
+	memset(c_unit->cur_device, 0, IFACE_SIZE);
 	memcpy(c_unit->cur_device, iface, IFACE_SIZE);
-	if ((setsockopt(sock_raw, SOL_SOCKET, SO_BINDTODEVICE, \
+
+	close(*sock_raw);
+	/*ETH_P_ALL  -  receive all protocol packets*/
+	*sock_raw = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+	if (*sock_raw < 0)
+	{
+		syslog(LOG_NOTICE, "-> socket error: %s.", strerror(errno));
+		return (-1);
+	}
+	if ((setsockopt(*sock_raw, SOL_SOCKET, SO_BINDTODEVICE, \
                      c_unit->cur_device, (socklen_t)strlen(c_unit->cur_device))) < 0)
 	{
 		syslog(LOG_NOTICE, "%s.", strerror(errno));

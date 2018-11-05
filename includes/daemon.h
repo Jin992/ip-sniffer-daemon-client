@@ -22,6 +22,8 @@
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include "shared.h"
+#include <linux/if_ether.h>
+#include <sys/poll.h>
 
 #define SESSION_FILE "/tmp/session"
 #define MSG_IN		2
@@ -79,14 +81,14 @@ int			save_cur_session(node_t *storage);
 void		load_session(ctrl_t *c_unit);
 
 /*Msg queue/msg funcs msg_funcs.c*/
-int			client_handler(int msqid, ctrl_t *c_unit, int sock_raw);
+int			client_handler(int msqid, ctrl_t *c_unit, int *sock_raw);
 int			init_msq(key_t *key);
 
 /*Client-operatins cli_operations.c*/
 int			op_start(ctrl_t *c_unit);
 int			op_stop(ctrl_t *c_unit);
 int			op_show(int msqid, ctrl_t *c_unit, uint32_t ip);
-int			op_select(int sock_raw, ctrl_t *c_unit, msgbuf_t *buf);
+int			op_select(int *sock_raw, ctrl_t *c_unit, msgbuf_t *buf);
 int			op_stat(int msqid, ctrl_t *c_unit, msgbuf_t *buf);
 int			op_daemon_stat(int msqid, ctrl_t *c_unit);
 

@@ -35,10 +35,11 @@ int sniffer(ctrl_t *c_unit)
 	int				client_recv;
 
 	syslog(LOG_NOTICE, "-> starting...");
-	sock_raw = socket(AF_INET, SOCK_RAW, IPPROTO_TCP);
+	/*ETH_P_ALL  -  receive all protocol packets*/
+	sock_raw = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 	if (sock_raw < 0)
 	{
-		syslog(LOG_NOTICE, "-> socket error.");
+		syslog(LOG_NOTICE, "-> socket error: %s.", strerror(errno));
 		return (-1);
 	}
 	if ((msqid = init_msq(&key)) == -1)
@@ -46,7 +47,7 @@ int sniffer(ctrl_t *c_unit)
 	load_session(c_unit);
 	while (1)
 	{
-		client_recv = client_handler(msqid, c_unit, sock_raw);
+		client_recv = client_handler(msqid, c_unit, &sock_raw);
 		if (client_recv == -1)
 		{
 			close(sock_raw);

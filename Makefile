@@ -1,7 +1,7 @@
 DAEMON_NAME = sniffer_daemon
 CLIENT_NAME = sniffer_client
 CC = @gcc
-CFLAGS = -Wall -Wextra -Wall 
+CFLAGS = -Wall -Wextra -Werror
 
 
 SHARED = ./shared/check_iface.c ./shared/ip_funcs.c ./shared/package.c\

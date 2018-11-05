@@ -35,11 +35,11 @@ static void print_help()
     printf("->> start                   - run daemon\n");
     printf("->> stop                    - stop daemon\n");
     printf("->> show [IP] count         - ​print number of packets received from ip address\n");
-    printf("->> select iface [Iface]    - ​(select interface for sniffing\n");
+    printf("->> select iface [Iface]    - ​select interface for sniffing\n");
     printf("->> stat optional [Iface]   - show all collected statistics for particular interface\n");
     printf("->>                           if ifaceomitted - for all interfaces.\n");
     printf("->> daemon                  - show daemon current status\n");
-    printf("->> quit                    - exit from clietn\n");
+    printf("->> quit                    - exit from client\n");
     printf("->> shutdown                - turn off daemon\n");
     printf("->> --help                  - ​show usage information\n");
 }

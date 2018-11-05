@@ -16,7 +16,7 @@ int init_msq(key_t *key)
 	return msqid;
 }
 
-int client_handler(int msqid, ctrl_t *c_unit, int sock_raw)
+int client_handler(int msqid, ctrl_t *c_unit, int *sock_raw)
 {
 	msgbuf_t	buf;
 	uint32_t	op = 0, qnt = 0, ip = 0;
